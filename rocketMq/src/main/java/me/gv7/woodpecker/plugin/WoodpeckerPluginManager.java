@@ -13,6 +13,7 @@ import me.gv7.woodpecker.vuldb.RocketMqInfo;
 public class WoodpeckerPluginManager implements IPluginManager{
     public void registerPluginManagerCallbacks(IPluginManagerCallbacks iPluginManagerCallbacks) {
         final RocketMqInfo vulInfo = new RocketMqInfo();
+
         iPluginManagerCallbacks.registerVulPlugin(vulInfo);
     }
 }
