@@ -1,8 +1,12 @@
 package me.gv7.woodpecker.vuldb;
 
+import me.gv7.woodpecker.plugin.IExploit;
 import me.gv7.woodpecker.plugin.IPluginHelper;
 import me.gv7.woodpecker.plugin.IVulPlugin;
 import me.gv7.woodpecker.plugin.IVulPluginCallbacks;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @ClassName: VulPluginInfo
@@ -29,5 +33,10 @@ public class RocketMqInfo implements IVulPlugin {
         callbacks.setVulSeverity("high");
         callbacks.setVulProduct("RocketMQ");
         callbacks.setVulScope("Apache RocketMQ <= 5.1.0");
+
+
+        //  注册 Exploit 模块，Exploit 模块的作用对漏洞发起攻击
+        List<IExploit> exploitList = new ArrayList<>();
+//        exploitList.add();
     }
 }
