@@ -37,6 +37,7 @@ public class RocketMqInfo implements IVulPlugin {
 
         //  注册 Exploit 模块，Exploit 模块的作用对漏洞发起攻击
         List<IExploit> exploitList = new ArrayList<>();
-//        exploitList.add();
+        exploitList.add(new CVE_2023_33246_PayloadGenerator());
+        callbacks.registerExploit(exploitList);
     }
 }

